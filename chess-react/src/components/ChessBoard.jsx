@@ -1,6 +1,10 @@
 //import { Color, PieceSymbol, Square } from "chess.js";
+import { useState } from "react";
 
 export const ChessBoard = ({ board }) => {
+  const [from, setFrom] = useState(null);
+  const [to, setTo] = useState(null);
+
   return (
     <div className="text-white-200">
       {board.map((row, i) => {
@@ -10,11 +14,23 @@ export const ChessBoard = ({ board }) => {
               return (
                 <div
                   key={j}
-                  className={`w-8 h-8 ${
-                    square ? "bg-green-500" : "bg-green-300"
+                  onClick={() => {
+                    console.log(square.square);
+                    if (!from) {
+                      setFrom(square?.square ?? null);
+                    } else {
+                      setTo(square?.square ?? null);
+                    }
+                  }}
+                  className={`w-16 h-16 ${
+                    (i + j) % 2 === 0 ? "bg-green-500" : "bg-white"
                   }`}
                 >
-                  {square ? square.type : ""}
+                  <div className="w-full h-full justify-center flex">
+                    <div className="h-full justify-center flex flex-col">
+                      {square ? square.type : ""}
+                    </div>
+                  </div>
                 </div>
               );
             })}
